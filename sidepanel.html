@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Side Panel</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="container">
+    <nav class="ai-nav">
+      <button id="add-btn" class="ai-button add-button" title="管理AI工具">
+        <svg class="add-icon" viewBox="0 0 24 24" width="20" height="20">
+          <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </nav>
+    <div class="iframe-container" id="iframe-container">
+      <div id="loading-indicator" class="loading-indicator hidden">
+        <div class="spinner"></div>
+        <span>加载中...</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="manager-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>管理AI工具</h2>
+        <button id="close-modal" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="add-tool">
+          <input id="tool-name" type="text" placeholder="名称（如：ChatGPT）"/>
+          <input id="tool-url" type="text" placeholder="URL（如：https://chatgpt.com/）"/>
+          <button id="add-tool-btn">添加</button>
+        </div>
+        <ul id="tools-list" class="tools-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>
