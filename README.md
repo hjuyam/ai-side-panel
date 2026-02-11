@@ -35,17 +35,56 @@ AI Side Panel 是一款 Chrome 浏览器扩展，让你在侧边栏中快速访�
 
 ### 安装方式
 
-#### 从 Chrome 网上应用店安装（推荐）
-1. 访问 [Chrome Web Store](https://chrome.google.com/webstore)
-2. 搜索 "AI Side Panel"
-3. 点击 "添加到 Chrome"
+#### 方法一：加载已解压的扩展程序（推荐）
 
-#### 开发者模式安装
-1. 下载本扩展的源代码
-2. 打开 Chrome 浏览器，访问 `chrome://extensions/`
-3. 启用右上角的 "开发者模式"
-4. 点击 "加载已解压的扩展程序"
-5. 选择扩展所在的文件夹
+1. **下载或克隆本项目**
+   ```bash
+   git clone https://github.com/yourusername/ai-side-panel.git
+   ```
+   或从 GitHub Releases 页面下载预打包的 `.zip` 文件并解压
+
+2. **打开 Chrome 扩展管理页面**
+   - 在浏览器地址栏输入 `chrome://extensions/`
+   - 或点击浏览器菜单 → 扩展程序 → 管理扩展程序
+
+3. **启用开发者模式**
+   - 找到页面右上角的 "开发者模式" 开关
+   - 将其切换为 **开启** 状态
+
+4. **加载扩展程序**
+   - 点击左上角的 **"加载已解压的扩展程序"** 按钮
+   - 选择本项目文件夹（包含 `manifest.json` 文件的目录）
+
+5. **验证安装成功**
+   - 扩展成功加载后会出现在扩展列表中
+   - 浏览器工具栏会显示扩展图标
+   - 点击图标即可打开侧边栏
+
+#### 方法二：使用打包后的 CRX 文件（可选）
+
+如果你使用的是预编译的 `.crx` 文件：
+
+1. 将 `.crx` 文件拖拽到 `chrome://extensions/` 页面
+2. 根据提示确认安装
+
+> **注意**：使用 CRX 文件安装时，Chrome 可能会提示"无法从该网站添加应用"，这是正常的沙盒安全限制。建议使用方法一安装。
+
+#### 方法三：使用命令行安装（开发者）
+
+```bash
+# 进入项目目录
+cd ai-side-panel
+
+# 使用 Chrome 安装扩展
+# macOS
+open -a "Google Chrome" --args --load-extension=$(pwd)
+
+# Linux
+google-chrome --load-extension=$(pwd)
+
+# Windows
+start chrome --load-extension="%cd%"
+```
 
 ### 使用说明
 
@@ -126,17 +165,56 @@ AI Side Panel is a Chrome browser extension that allows you to quickly access mu
 
 ### Installation
 
-#### Install from Chrome Web Store (Recommended)
-1. Visit [Chrome Web Store](https://chrome.google.com/webstore)
-2. Search for "AI Side Panel"
-3. Click "Add to Chrome"
+#### Method 1: Load Unpacked Extension (Recommended)
 
-#### Install in Developer Mode
-1. Download the extension source code
-2. Open Chrome and navigate to `chrome://extensions/`
-3. Enable "Developer mode" in the top right corner
-4. Click "Load unpacked"
-5. Select the extension folder
+1. **Download or Clone This Project**
+   ```bash
+   git clone https://github.com/yourusername/ai-side-panel.git
+   ```
+   Or download the pre-packaged `.zip` file from GitHub Releases and extract it
+
+2. **Open Chrome Extensions Page**
+   - Type `chrome://extensions/` in the address bar
+   - Or click Menu → Extensions → Manage Extensions
+
+3. **Enable Developer Mode**
+   - Find the "Developer mode" toggle in the top right corner
+   - Switch it to **ON**
+
+4. **Load the Extension**
+   - Click the **"Load unpacked"** button in the top left
+   - Select the project folder (the directory containing `manifest.json`)
+
+5. **Verify Installation**
+   - The extension will appear in the list after successful loading
+   - The extension icon will appear in the browser toolbar
+   - Click the icon to open the side panel
+
+#### Method 2: Install Using CRX File (Optional)
+
+If you're using a pre-built `.crx` file:
+
+1. Drag and drop the `.crx` file onto the `chrome://extensions/` page
+2. Confirm the installation when prompted
+
+> **Note**: When installing via CRX file, Chrome may show "Could not install extension from this website" - this is a normal sandbox security restriction. We recommend using Method 1.
+
+#### Method 3: Command Line Installation (For Developers)
+
+```bash
+# Navigate to project directory
+cd ai-side-panel
+
+# Install extension with Chrome
+# macOS
+open -a "Google Chrome" --args --load-extension=$(pwd)
+
+# Linux
+google-chrome --load-extension=$(pwd)
+
+# Windows
+start chrome --load-extension="%cd%"
+```
 
 ### Usage Guide
 
