@@ -114,16 +114,20 @@ function renderNav(aiToolsList) {
   const existingTools = Array.from(nav.querySelectorAll('.ai-button')).filter(btn => !btn.classList.contains('add-button'));
   existingTools.forEach(btn => btn.remove());
 
-  aiToolsList.forEach(tool => {
+  aiToolsList.forEach((tool, index) => {
     const button = document.createElement('button');
     button.className = 'ai-button';
     button.dataset.id = tool.id;
     button.dataset.url = tool.url;
+    button.dataset.index = index;
+    button.draggable = true;
+    button.title = '拖动调整顺序';
 
     const img = document.createElement('img');
     img.className = 'ai-icon';
     img.src = tool.icon || getFaviconUrl(tool.url);
     img.alt = tool.name;
+    img.draggable = false;
 
     const tooltip = document.createElement('span');
     tooltip.className = 'tooltip';
@@ -134,8 +138,12 @@ function renderNav(aiToolsList) {
     nav.insertBefore(button, addBtn);
 
     button.addEventListener('click', () => {
-      loadTool(tool.url, tool.id);
+      if (!button.classList.contains('dragging')) {
+        loadTool(tool.url, tool.id);
+      }
     });
+
+    setupNavDragDrop(button);
   });
 }
 
@@ -257,15 +265,53 @@ function renderToolsList() {
   });
 }
 
+function setupNavDragDrop(button) {
+  button.addEventListener('dragstart', (e) => {
+    button.classList.add('dragging');
+    e.dataTransfer.setData('text/plain', button.dataset.id);
+    e.dataTransfer.effectAllowed = 'move';
+  });
+
+  button.addEventListener('dragend', () => {
+    button.classList.remove('dragging');
+    updateNavOrder();
+  });
+
+  button.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    const dragging = document.querySelector('.ai-button.dragging');
+    if (!dragging || dragging === button) return;
+
+    const siblings = [...nav.querySelectorAll('.ai-button:not(.add-button):not(.dragging)')];
+    const nextSibling = siblings.find(sibling => {
+      const rect = sibling.getBoundingClientRect();
+      return e.clientY < rect.top + rect.height / 2;
+    });
+
+    nav.insertBefore(dragging, nextSibling || addBtn);
+  });
+}
+
+function updateNavOrder() {
+  const buttons = [...nav.querySelectorAll('.ai-button:not(.add-button)')];
+  const newOrder = buttons.map(btn => {
+    const toolId = btn.dataset.id;
+    return aiTools.find(tool => tool.id === toolId);
+  }).filter(Boolean);
+
+  aiTools = newOrder;
+  saveTools();
+}
+
 function setupDragAndDrop(item) {
   item.addEventListener('dragstart', (e) => {
     item.classList.add('dragging');
-    e.dataTransfer.setData('text/plain', item.dataset.index);
+    e.dataTransfer.setData('text/plain', item.dataset.id);
   });
 
   item.addEventListener('dragend', () => {
     item.classList.remove('dragging');
-    saveTools();
+    updateToolsOrder();
   });
 
   item.addEventListener('dragover', (e) => {
@@ -277,11 +323,6 @@ function setupDragAndDrop(item) {
       return e.clientY < rect.top + rect.height / 2;
     });
     toolsList.insertBefore(dragging, nextSibling);
-  });
-
-  item.addEventListener('drop', (e) => {
-    e.preventDefault();
-    updateToolsOrder();
   });
 }
 
