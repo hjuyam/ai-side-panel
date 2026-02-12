@@ -206,6 +206,7 @@ function renderToolsList() {
     li.className = 'tool-item';
     li.draggable = true;
     li.dataset.index = index;
+    li.dataset.id = tool.id;
 
     const favicon = document.createElement('img');
     favicon.src = tool.icon || getFaviconUrl(tool.url);
@@ -286,7 +287,10 @@ function setupDragAndDrop(item) {
 
 function updateToolsOrder() {
   const items = [...toolsList.querySelectorAll('.tool-item')];
-  const newOrder = items.map(item => aiTools[item.dataset.index]);
+  const newOrder = items.map(item => {
+    const toolId = item.dataset.id;
+    return aiTools.find(tool => tool.id === toolId);
+  }).filter(Boolean);
   aiTools = newOrder;
   saveTools();
   renderNav(aiTools);
