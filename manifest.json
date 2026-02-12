@@ -22,9 +22,7 @@
     "*://gemini.google.com/*",
     "*://chat.deepseek.com/*",
     "*://www.doubao.com/*",
-    "*://chat.z.ai/*"
-  ],
-  "optional_host_permissions": [
+    "*://chat.z.ai/*",
     "*://qwen.ai/*",
     "*://*.wenxiaobai.com/*",
     "*://*.anthropic.com/*",
@@ -41,7 +39,6 @@
     "*://*.groq.com/*",
     "*://*.mistral.ai/*",
     "*://*.replicate.com/*",
-    "*:// Stability.ai/*",
     "*://*.api.openai.com/*",
     "*://*.chatglm.cn/*",
     "*://*.xinghuo.xfyun.cn/*"

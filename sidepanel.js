@@ -351,28 +351,6 @@ function extractDomain(url) {
   }
 }
 
-async function requestPermissionForDomain(domain) {
-  if (!domain) return false;
-
-  try {
-    const granted = await chrome.permissions.request({
-      origins: [`*://${domain}/*`]
-    });
-
-    if (granted) {
-      return true;
-    } else {
-      alert('用户拒绝了权限请求。该工具可能无法正常加载。');
-      return false;
-    }
-  } catch (error) {
-    console.error('Permission request failed:', error);
-
-    alert(`无法自动获取 ${domain} 的权限。\n\n请确保：\n1. 该域名在扩展的 optional_host_permissions 中已声明\n2. 或者选择其他已支持的 AI 工具\n\n支持的 AI 网站包括：ChatGPT, Claude, Gemini, DeepSeek, 豆包, 智谱清言, 通义千问, 问小白, Perplexity, Poe, Character.AI 等`);
-    return false;
-  }
-}
-
 async function updateDnrRules(domains) {
   try {
     const existingRules = await chrome.declarativeNetRequest.getDynamicRules();
@@ -460,19 +438,6 @@ async function addTool() {
   console.log('Extracted domain:', domain);
 
   if (domain) {
-    const hasPermission = await chrome.permissions.contains({
-      origins: [`*://${domain}/*`]
-    });
-    console.log('Has permission:', hasPermission);
-
-    if (!hasPermission) {
-      const granted = await requestPermissionForDomain(domain);
-      console.log('Permission request result:', granted);
-      if (!granted) {
-        return;
-      }
-    }
-  }
 
   const newTool = {
     id: 'tool_' + Date.now(),
