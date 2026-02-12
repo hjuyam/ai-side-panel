@@ -354,17 +354,15 @@ function extractDomain(url) {
 async function requestPermissionForDomain(domain) {
   if (!domain) return false;
 
-  const hasPermission = await chrome.permissions.contains({
-    origins: [`*://${domain}/*`]
-  });
-
-  if (hasPermission) {
-    return true;
+  try {
+    return await chrome.permissions.request({
+      origins: [`*://${domain}/*`]
+    });
+  } catch (error) {
+    console.error('Permission request failed:', error);
+    alert(`无法获取 ${domain} 的权限。\n\n请前往扩展设置手动添加该域名的 host_permissions，\n或者联系开发者将此域名添加到预置权限列表中。`);
+    return false;
   }
-
-  return await chrome.permissions.request({
-    origins: [`*://${domain}/*`]
-  });
 }
 
 async function updateDnrRules(domains) {
@@ -435,8 +433,6 @@ async function addTool() {
   const url = toolUrlInput.value.trim();
 
   console.log('addTool - name:', name, 'url:', url);
-  console.log('toolNameInput value:', toolNameInput.value);
-  console.log('toolUrlInput value:', toolUrlInput.value);
 
   if (!name || !url) {
     alert('请输入完整的名称和URL');
@@ -456,12 +452,17 @@ async function addTool() {
   console.log('Extracted domain:', domain);
 
   if (domain) {
-    const granted = await requestPermissionForDomain(domain);
-    console.log('Permission granted:', granted);
-    if (!granted) {
-      alert('需要权限才能访问该网站');
-      console.log('Error: permission denied');
-      return;
+    const hasPermission = await chrome.permissions.contains({
+      origins: [`*://${domain}/*`]
+    });
+    console.log('Has permission:', hasPermission);
+
+    if (!hasPermission) {
+      const granted = await requestPermissionForDomain(domain);
+      console.log('Permission request result:', granted);
+      if (!granted) {
+        return;
+      }
     }
   }
 

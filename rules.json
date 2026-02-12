@@ -34,7 +34,11 @@
         "google.com",
         "deepseek.com",
         "doubao.com",
-        "z.ai"
+        "z.ai",
+        "qwen.ai",
+        "wenxiaobai.com",
+        "anthropic.com",
+        "ai.com"
       ],
       "resourceTypes": [
         "main_frame",

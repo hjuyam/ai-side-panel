@@ -1,4 +1,5 @@
 {
+  "_comment": "To add a new AI tool: update BOTH manifest.json host_permissions AND rules.json requestDomains",
   "manifest_version": 3,
   "name": "AI Side Panel",
   "version": "1.0.0",
@@ -21,7 +22,11 @@
     "*://gemini.google.com/*",
     "*://chat.deepseek.com/*",
     "*://www.doubao.com/*",
-    "*://chat.z.ai/*"
+    "*://chat.z.ai/*",
+    "*://qwen.ai/*",
+    "*://*.wenxiaobai.com/*",
+    "*://*.anthropic.com/*",
+    "*://*.ai.com/*"
   ],
   "background": {
     "service_worker": "background.js"
