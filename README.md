@@ -81,6 +81,15 @@ chrome://extensions/
   - iframe 缓存：使用 Map 结构缓存所有 iframe 实例
   - Storage API：持久化用户配置
 
+### 添加新 AI 工具支持
+
+由于 Chrome 扩展的安全限制，所有 AI 网站的域名需要在 manifest 中预声明。如需添加新 AI 工具，需要修改：
+
+**1. manifest.json**：在 `host_permissions` 添加域名
+**2. rules.json**：在 `requestDomains` 数组添加对应域名
+
+修改后需重新加载扩展才能生效。
+
 ### 授权声明
 
 扩展图标来源于 [Flaticon](https://www.flaticon.com)，遵循免费使用授权协议。
@@ -195,6 +204,15 @@ Once installed successfully, you'll see "AI Side Panel" in the extensions list, 
   - Declarative Net Request (DNR): Modify User-Agent and remove frame restrictions
   - iframe Caching: Map structure to cache all iframe instances
   - Storage API: Persist user configuration
+
+### Adding New AI Tools
+
+Due to Chrome's security restrictions, all AI tool domains must be pre-declared. To add support for new tools, update:
+
+**1. manifest.json**: Add domains to `host_permissions`
+**2. rules.json**: Add domains to `requestDomains` array
+
+Reload the extension after making changes.
 
 ### License Attribution
 
