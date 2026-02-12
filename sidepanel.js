@@ -307,6 +307,7 @@ function setupDragAndDrop(item) {
   item.addEventListener('dragstart', (e) => {
     item.classList.add('dragging');
     e.dataTransfer.setData('text/plain', item.dataset.id);
+    e.dataTransfer.effectAllowed = 'move';
   });
 
   item.addEventListener('dragend', () => {
@@ -316,7 +317,9 @@ function setupDragAndDrop(item) {
 
   item.addEventListener('dragover', (e) => {
     e.preventDefault();
-    const dragging = document.querySelector('.dragging');
+    const dragging = document.querySelector('.tool-item.dragging');
+    if (!dragging || dragging === item) return;
+
     const siblings = [...toolsList.querySelectorAll('.tool-item:not(.dragging)')];
     const nextSibling = siblings.find(sibling => {
       const rect = sibling.getBoundingClientRect();

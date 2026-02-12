@@ -20,7 +20,8 @@
     "*://*.claude.ai/*",
     "*://gemini.google.com/*",
     "*://chat.deepseek.com/*",
-    "*://www.doubao.com/*"
+    "*://www.doubao.com/*",
+    "*://chat.z.ai/*"
   ],
   "background": {
     "service_worker": "background.js"
