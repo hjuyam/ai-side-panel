@@ -423,11 +423,24 @@ async function updateDnrRules(domains) {
 
 
 async function addTool() {
+  console.log('=== addTool called ===');
+
+  if (!toolNameInput || !toolUrlInput) {
+    console.error('DOM elements not found');
+    alert('错误：无法找到输入框');
+    return;
+  }
+
   const name = toolNameInput.value.trim();
   const url = toolUrlInput.value.trim();
 
+  console.log('addTool - name:', name, 'url:', url);
+  console.log('toolNameInput value:', toolNameInput.value);
+  console.log('toolUrlInput value:', toolUrlInput.value);
+
   if (!name || !url) {
     alert('请输入完整的名称和URL');
+    console.log('Error: empty name or url');
     return;
   }
 
@@ -435,14 +448,19 @@ async function addTool() {
     new URL(url);
   } catch (e) {
     alert('请输入有效的URL');
+    console.log('Error: invalid URL', e);
     return;
   }
 
   const domain = extractDomain(url);
+  console.log('Extracted domain:', domain);
+
   if (domain) {
     const granted = await requestPermissionForDomain(domain);
+    console.log('Permission granted:', granted);
     if (!granted) {
       alert('需要权限才能访问该网站');
+      console.log('Error: permission denied');
       return;
     }
   }
@@ -454,16 +472,33 @@ async function addTool() {
     icon: getFaviconUrl(url)
   };
 
+  console.log('Adding tool:', newTool);
   aiTools.push(newTool);
-  await saveTools();
-  createIframes(aiTools);
-  renderToolsList();
-  renderNav(aiTools);
 
-  await refreshDnrRules();
+  try {
+    await saveTools();
+    console.log('Tools saved');
+    createIframes([newTool]);
+    console.log('Iframe created');
+    renderToolsList();
+    console.log('Tools list rendered');
+    renderNav(aiTools);
+    console.log('Nav rendered');
+    await refreshDnrRules();
+    console.log('DNR rules refreshed');
 
-  toolNameInput.value = '';
-  toolUrlInput.value = '';
+    toolNameInput.value = '';
+    toolUrlInput.value = '';
+    console.log('Input fields cleared');
+
+    toolNameInput.focus();
+    console.log('Focused on name input');
+
+    console.log('Tool added successfully. Total tools:', aiTools.length);
+  } catch (error) {
+    console.error('Error during addTool:', error);
+    alert('添加工具时发生错误: ' + error.message);
+  }
 }
 
 async function refreshDnrRules() {
