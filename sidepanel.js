@@ -46,6 +46,7 @@ async function init() {
     createIframes(aiTools);
     renderNav(aiTools);
     await ensureIcons(aiTools);
+    await refreshDnrRules();
 
     let targetUrl = aiTools[0]?.url || 'https://chatgpt.com/';
     let targetId = aiTools[0]?.id || 'chatgpt';
@@ -340,6 +341,86 @@ function updateToolsOrder() {
   renderNav(aiTools);
 }
 
+function extractDomain(url) {
+  try {
+    const urlObj = new URL(url);
+    return urlObj.hostname;
+  } catch (e) {
+    console.error('Invalid URL:', url);
+    return null;
+  }
+}
+
+async function requestPermissionForDomain(domain) {
+  if (!domain) return false;
+
+  const hasPermission = await chrome.permissions.contains({
+    origins: [`*://${domain}/*`]
+  });
+
+  if (hasPermission) {
+    return true;
+  }
+
+  return await chrome.permissions.request({
+    origins: [`*://${domain}/*`]
+  });
+}
+
+async function updateDnrRules(domains) {
+  try {
+    const existingRules = await chrome.declarativeNetRequest.getDynamicRules();
+    const existingRuleIds = existingRules.map(rule => rule.id);
+
+    if (existingRuleIds.length > 0) {
+      await chrome.declarativeNetRequest.updateDynamicRules({
+        removeRuleIds: existingRuleIds
+      });
+    }
+
+    const newRules = [{
+      id: 1,
+      priority: 1,
+      action: {
+        type: "modifyHeaders",
+        requestHeaders: [
+          {
+            header: "User-Agent",
+            operation: "set",
+            value: "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+          }
+        ],
+        responseHeaders: [
+          {
+            header: "X-Frame-Options",
+            operation: "remove"
+          },
+          {
+            header: "Content-Security-Policy",
+            operation: "remove"
+          },
+          {
+            header: "frame-ancestors",
+            operation: "remove"
+          }
+        ]
+      },
+      condition: {
+        requestDomains: domains,
+        resourceTypes: ["main_frame", "sub_frame"]
+      }
+    }];
+
+    await chrome.declarativeNetRequest.updateDynamicRules({
+      addRules: newRules
+    });
+
+    console.log('DNR rules updated for domains:', domains);
+  } catch (error) {
+    console.error('Failed to update DNR rules:', error);
+  }
+}
+
 
 async function addTool() {
   const name = toolNameInput.value.trim();
@@ -357,6 +438,15 @@ async function addTool() {
     return;
   }
 
+  const domain = extractDomain(url);
+  if (domain) {
+    const granted = await requestPermissionForDomain(domain);
+    if (!granted) {
+      alert('需要权限才能访问该网站');
+      return;
+    }
+  }
+
   const newTool = {
     id: 'tool_' + Date.now(),
     name,
@@ -370,8 +460,18 @@ async function addTool() {
   renderToolsList();
   renderNav(aiTools);
 
+  await refreshDnrRules();
+
   toolNameInput.value = '';
   toolUrlInput.value = '';
+}
+
+async function refreshDnrRules() {
+  const domains = aiTools
+    .map(tool => extractDomain(tool.url))
+    .filter(Boolean);
+
+  await updateDnrRules(domains);
 }
 
 async function editTool(index) {

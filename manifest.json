@@ -12,7 +12,8 @@
     "sidePanel",
     "storage",
     "declarativeNetRequest",
-    "declarativeNetRequestWithHostAccess"
+    "declarativeNetRequestWithHostAccess",
+    "permissions"
   ],
   "host_permissions": [
     "*://*.openai.com/*",
