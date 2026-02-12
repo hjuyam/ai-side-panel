@@ -355,12 +355,20 @@ async function requestPermissionForDomain(domain) {
   if (!domain) return false;
 
   try {
-    return await chrome.permissions.request({
+    const granted = await chrome.permissions.request({
       origins: [`*://${domain}/*`]
     });
+
+    if (granted) {
+      return true;
+    } else {
+      alert('用户拒绝了权限请求。该工具可能无法正常加载。');
+      return false;
+    }
   } catch (error) {
     console.error('Permission request failed:', error);
-    alert(`无法获取 ${domain} 的权限。\n\n请前往扩展设置手动添加该域名的 host_permissions，\n或者联系开发者将此域名添加到预置权限列表中。`);
+
+    alert(`无法自动获取 ${domain} 的权限。\n\n请确保：\n1. 该域名在扩展的 optional_host_permissions 中已声明\n2. 或者选择其他已支持的 AI 工具\n\n支持的 AI 网站包括：ChatGPT, Claude, Gemini, DeepSeek, 豆包, 智谱清言, 通义千问, 问小白, Perplexity, Poe, Character.AI 等`);
     return false;
   }
 }

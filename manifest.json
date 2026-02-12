@@ -22,11 +22,29 @@
     "*://gemini.google.com/*",
     "*://chat.deepseek.com/*",
     "*://www.doubao.com/*",
-    "*://chat.z.ai/*",
+    "*://chat.z.ai/*"
+  ],
+  "optional_host_permissions": [
     "*://qwen.ai/*",
     "*://*.wenxiaobai.com/*",
     "*://*.anthropic.com/*",
-    "*://*.ai.com/*"
+    "*://*.ai.com/*",
+    "*://qwenlm.ai/*",
+    "*://*.poe.com/*",
+    "*://*.perplexity.ai/*",
+    "*://*.character.ai/*",
+    "*://*.cohere.com/*",
+    "*://*.huggingface.co/*",
+    "*://*.bard.ai/*",
+    "*://*.minimax.chat/*",
+    "*://x.ai/*",
+    "*://*.groq.com/*",
+    "*://*.mistral.ai/*",
+    "*://*.replicate.com/*",
+    "*:// Stability.ai/*",
+    "*://*.api.openai.com/*",
+    "*://*.chatglm.cn/*",
+    "*://*.xinghuo.xfyun.cn/*"
   ],
   "background": {
     "service_worker": "background.js"
