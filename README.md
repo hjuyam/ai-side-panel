@@ -87,24 +87,28 @@ Chrome 扩展的安全限制要求所有域名在扩展安装前预声明。我�
 
 **已预置支持的 AI 工具（无需额外处理）：**
 
-核心 AI 工具：
-- ChatGPT (chatgpt.com, openai.com)
-- Claude (claude.ai, anthropic.com)
-- Gemini (gemini.google.com)
-- DeepSeek (chat.deepseek.com)
-- 豆包 (doubao.com)
-- 智谱清言 (chat.z.ai)
+**AI 对话聊天 TOP 排行榜支持（基于 AI 星踪岛）：**
 
-其他主流 AI 工具：
-- 通义千问 (qwen.ai)
-- 问小白 (wenxiaobai.com)
-- Perplexity (perplexity.ai)
+1. ChatGPT ⭐⭐⭐⭐⭐ (chatgpt.com)
+2. Gemini ⭐⭐⭐⭐⭐ (gemini.google.com)
+3. DeepSeek ⭐⭐⭐⭐⭐ (chat.deepseek.com)
+4. X.AI / Grok ⭐⭐⭐⭐⭐ (x.ai)
+5. 文心一言 ⭐⭐⭐⭐⭐ (yiyan.baidu.com)
+6. Kimi ⭐⭐⭐⭐⭐ (kimi.moonshot.cn)
+7. New Bing ⭐⭐⭐⭐⭐ (bing.com)
+8. 腾讯元宝 ⭐⭐⭐⭐⭐ (yuanbao.tencent.com)
+9. LongCat ⭐⭐⭐⭐ (longbotapp.meituan.com)
+10. Perplexity ⭐⭐⭐⭐ (perplexity.ai)
+11. 通义千问 ⭐⭐⭐⭐ (qwen.ai)
+12. 问小白 ⭐⭐⭐⭐ (wenxiaobai.com)
+13. Claude ⭐⭐⭐⭐ (claude.ai)
+14. 豆包 ⭐⭐⭐⭐ (doubao.com)
+15. 智谱清言 ⭐⭐⭐⭐ (chat.z.ai)
+
+**其他热门 AI 工具：**
 - Poe (poe.com)
 - Character.AI (character.ai)
-- Groq (groq.com)
-- Mistral (mistral.ai)
-- X.AI / Grok (x.ai)
-- Cohere, HuggingFace, Replicate, Bard 等
+- Groq, Mistral, Cohere, HuggingFace, Replicate, Bard 等
 
 以上工具可以直接在管理弹窗中添加，无需修改代码。
 

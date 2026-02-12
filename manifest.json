@@ -41,7 +41,14 @@
     "*://*.replicate.com/*",
     "*://*.api.openai.com/*",
     "*://*.chatglm.cn/*",
-    "*://*.xinghuo.xfyun.cn/*"
+    "*://*.xinghuo.xfyun.cn/*",
+    "*://yuanbao.tencent.com/*",
+    "*://yiyan.baidu.com/*",
+    "*://moonshot.cn/*",
+    "*://kimi.moonshot.cn/*",
+    "*://bing.com/*",
+    "*://*.bing.com/*",
+    "*://longbotapp.meituan.com/*"
   ],
   "background": {
     "service_worker": "background.js"

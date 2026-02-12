@@ -53,7 +53,12 @@
         "replicate.com",
         "api.openai.com",
         "chatglm.cn",
-        "xinghuo.xfyun.cn"
+        "xinghuo.xfyun.cn",
+        "tencent.com",
+        "baidu.com",
+        "moonshot.cn",
+        "bing.com",
+        "meituan.com"
       ],
       "resourceTypes": [
         "main_frame",
