@@ -83,12 +83,27 @@ chrome://extensions/
 
 ### 添加新 AI 工具支持
 
-由于 Chrome 扩展的安全限制，所有 AI 网站的域名需要在 manifest 中预声明。如需添加新 AI 工具，需要修改：
+**自动添加 AI 工具：**
 
-**1. manifest.json**：在 `host_permissions` 添加域名
-**2. rules.json**：在 `requestDomains` 数组添加对应域名
+扩展支持常见的 AI 工具，可以在管理弹窗中直接添加。首次使用会弹出权限请求对话框：
 
-修改后需重新加载扩展才能生效。
+已支持自动添加的 AI 网站：
+- ChatGPT, Claude, Gemini
+- 通义千问, 智谱清言, 文心一言
+- DeepSeek, 豆包
+- Perplexity, Poe, Character.AI
+- Groq, Mistral, X.AI (Grok)
+- 以及更多主流 AI 工具
+
+**手动添加新 AI 工具：**
+
+如果想要支持的 AI 工具不在列表中，需要修改扩展源码：
+
+**1. manifest.json**：在 `optional_host_permissions` 添加域名
+**2. rules.json**：在 `requestDomains` 数组添加对应域名（仅静态声明的域名）
+**3. 修改后需重新加载扩展**
+
+扩展使用动态 DNR 规则，添加新工具后会自动更新网络规则。
 
 ### 授权声明
 
